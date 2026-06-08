@@ -1,48 +1,131 @@
-const noBtn = document.getElementById("noBtn");
-const yesBtn = document.getElementById("yesBtn");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
 
-noBtn.addEventListener("mouseover", () => {
-    const maxX = window.innerWidth - noBtn.offsetWidth;
-    const maxY = window.innerHeight - noBtn.offsetHeight;
+body {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3, #fad0c4);
+}
 
-    const randomX = Math.floor(Math.random() * maxX);
-    const randomY = Math.floor(Math.random() * maxY);
+/* floating hearts background */
+.bg-hearts::before {
+  content: "💖 💕 💗 💞 💘 💝";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  font-size: 40px;
+  opacity: 0.2;
+  animation: float 10s linear infinite;
+}
 
-    noBtn.style.left = randomX + "px";
-    noBtn.style.top = randomY + "px";
-});
+@keyframes float {
+  0% { transform: translateY(100%); }
+  100% { transform: translateY(-100%); }
+}
 
-yesBtn.addEventListener("click", () => {
-    document.querySelector(".container").style.display = "none";
+.card {
+  background: rgba(255,255,255,0.2);
+  padding: 40px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
 
-    const celebration = document.getElementById("celebration");
-    celebration.classList.remove("hidden");
+h1 {
+  color: white;
+  font-size: 28px;
+}
 
-    createHearts();
-});
+.sub {
+  color: #fff;
+  margin-top: 10px;
+  opacity: 0.8;
+}
 
-function createHearts() {
-    for(let i=0; i<50; i++) {
-        const heart = document.createElement("div");
+.buttons {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
 
-        heart.innerHTML = "💖";
-        heart.style.position = "absolute";
-        heart.style.left = Math.random()*100 + "vw";
-        heart.style.top = "-20px";
-        heart.style.fontSize = (Math.random()*30+20) + "px";
+button {
+  padding: 12px 28px;
+  font-size: 18px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: 0.3s;
+}
 
-        document.body.appendChild(heart);
+#yesBtn {
+  background: #ff2d75;
+  color: white;
+}
 
-        let pos = -20;
+#yesBtn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px #ff2d75;
+}
 
-        const fall = setInterval(() => {
-            pos += 5;
-            heart.style.top = pos + "px";
+#noBtn {
+  background: white;
+  color: #333;
+  position: absolute;
+}
 
-            if(pos > window.innerHeight){
-                clearInterval(fall);
-                heart.remove();
-            }
-        }, 20);
-    }
+/* popup */
+.popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.popup-content {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  width: 90%;
+  max-width: 500px;
+}
+
+.gallery {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.gallery img {
+  width: 100px;
+  border-radius: 12px;
+  animation: pop 1s infinite alternate;
+}
+
+@keyframes pop {
+  from { transform: scale(1); }
+  to { transform: scale(1.1); }
+}
+
+#closeBtn {
+  margin-top: 20px;
+  background: #ff2d75;
+  color: white;
 }
